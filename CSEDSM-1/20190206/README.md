@@ -1,7 +1,19 @@
-# CSEDSM 1 - Lezione del 6 febbraio 2018
+# CSEDSM 1 - Lezione del 6 febbraio 2019
 
 ## Argomenti
 
+* riflessioni progettuali sulla costruzione del gioco [*The Filter Game* (TFG)](https://github.com/SME-CCPPD/TFG)
+  * *object-oriented programming*
+  * *agile programming paradigm*
+  * *Test-driven development* (TDD)
+  * *Behaviour-driven development*
+* Modelli di rappresentazione di un filtro:
+  * risposta in frequenza
+  * risposta in fase
+  * piano *Z*
+  * poli e zeri
+* Filtri *one-zero*
+* Filtri *comb*
 
 ## Lavagne
 
@@ -9,58 +21,12 @@
 
 ![whiteboard 2](./BN_TFG_2019-02-06_10.52.54_2.jpg)
 
-## Esempi `matlab`
+## Grafici
 
-Filtro FIR del prim'ordine (filtro di media):
+Risposta in frequenza di un filtro *one-zero*:
 
-```matlab
-fc=1;
-step=0.01
-W=[0:step:fc*2*pi-step];
-H=1+e.^(-i*W);
-plot(W,H);
-```
+![Risposta in frequenza di un filtro *one-zero*](./one_zero.jpg)
 
-La funzione di trasferimento di tale filtro è espressa nel grafico che segue:
+![Test (con rumore bianco) della risposta in frequenza di un filtro *one-zero*](./one_zero_test.jpg)
 
-![one zero funzione di trasferimento](./one_zero.jpg)
-
-Test del filtro FIR di prim'ordine:
-
-```matlab
-fc=1000;
-dur=10;
-sinc=1/fc;
-t=[0:sinc:dur-sinc];
-X=rand(1,length(t))*2-1;
-Y=zeros(1,length(t));
-for k=2:length(t)
-  Y(k)=(X(k)+X(k-1))/2;
-  end
-binsize=fc/length(t);
-F=[0:binsize:fc-binsize];
-Yfft=fft(Y);
-mag=20*log10(abs(Yfft))/length(t);
-plot(F,mag);
-
-```
-
-Il grafico risultante da questo codice è il seguente:
-
-![one zero test con rumore bianco](./one_zero_test.jpg
-
-Filtro FIR *comb* passivo del prim'ordine (con `delay = 7 campioni`):
-
-```matlab
-fc=1;
-step=0.01
-W=[0:step:fc*2*pi-step];
-m=7
-H=1+e.^(-i*W*m);
-plot(W,H);
-```
-
-La funzione di trasferimento di tale filtro è espressa nel grafico che segue:
-
-![comb funzione di trasferimento](./comb.jpg)
-
+![Risposta in frequenza di un filtro *comb*](./comb.jpg)
